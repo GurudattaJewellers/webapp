@@ -1,0 +1,15 @@
+/* src/assets/fonts/fonts.css */
+@font-face {
+    font-family: 'Mokoto';
+    src: url('./mokoto/Mokoto.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Mokoto';
+    src: url('./mokoto/Mokoto.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  

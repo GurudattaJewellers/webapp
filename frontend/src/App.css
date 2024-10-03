@@ -1,0 +1,125 @@
+/* src/App.css */
+@import url('./assets/fonts/fonts.css');
+
+/* Now you can use the font-family in your styles */
+body {
+  font-family: 'Mokoto', sans-serif;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #4a0121;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  height: 60px; /* Adjust the height of the navbar */
+  padding: 0 20px;
+  box-shadow: 0px 4px 2px -2px gray;
+}
+
+.home{
+  background-color: #4a0121;
+}
+
+.logo {
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Remove underline */
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-family: 'Mokoto', sans-serif;
+  color: #d39d5e;
+  font-size: 24px; /* Adjust font size */
+  margin: 0; /* Remove margin from h1 */
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.nav-links li a:hover {
+  color: #d39d5e; /* Optional: change color on hover */
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links a {
+  color: #d39d5e;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-links li a{
+  font-size: 15px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #4a0121;
+  padding: 1rem;
+  height: 40px;
+  text-align: center;
+  color: #d39d5e;
+  
+}
+
+.social-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.social-links li {
+  margin-right: 20px;
+}
+
+.social-links a {
+  color: #d39d5e;
+  text-decoration: none;
+}
+
+.social-links i {
+  font-size: 24px;
+}
+
+/* In App.css or any global CSS */
+.App {
+  text-align: center;
+  padding-top: 60px;
+}
+
+.MainContent {
+  margin-top: 60px; /* Adjust this based on your navbar height */
+  padding: 20px;
+}
