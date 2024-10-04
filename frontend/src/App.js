@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
+import PriceCard from './components/PriceCard';
 
 function App() {
   return (
@@ -11,12 +12,13 @@ function App() {
       <div className="App">
         <Navbar />
         <Footer />
-      </div>
-      <Routes>
+      
+        <Routes>
           {/* Use `element` prop instead of `component` */}
           <Route path="/" element={<Home />} />
-          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/aboutus" element={<AboutUs />} />
         </Routes>
+        </div>
     </Router>
   );
 }
