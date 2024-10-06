@@ -1,13 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-multi-date-picker';
-import 'react-multi-date-picker/styles/colors/purple.css';
+import 'react-multi-date-picker/styles/colors/maroon.css';
+import usa from '../assets/usa.svg';
+import uk from '../assets/uk.svg';
+import uae from '../assets/uae.svg';
+import india from '../assets/india.svg';
 
 const PriceCard = () => {
   const [livePrices, setLivePrices] = useState({ gold: 0, silver: 0 });
   const [historyPrices, setHistoryPrices] = useState([]);
   const [selectedDates, setSelectedDates] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);  // Add a loading state     
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+  const [userTimezone, setUserTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
+
+  useEffect(() => {
+    // This will update the time based on the user's time zone when the component loads
+    const updateLastUpdatedTime = () => {
+      setLastUpdated(new Date());
+    };
+    updateLastUpdatedTime();
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   console.log(selectedDates);
 
@@ -73,74 +95,119 @@ const PriceCard = () => {
     fetchDefaultHistoryPrices(); // Fetch default one week prices on load
   }, []);
 
+  const getCityTime = (offset) => {
+    const utc = lastUpdated.getTime() + (lastUpdated.getTimezoneOffset() * 60000);
+    const cityTime = new Date(utc + (3600000 * offset));
+    return cityTime.toLocaleTimeString();
+  };
+
   return (
     <div className="price-card">
-      <div className="live-prices">
-        <h2>Live Prices</h2>
-        <p>Gold: {livePrices.gold}</p>
-        <p>Silver: {livePrices.silver}</p>
+  {/* Last updated section outside the live-prices card */}
+  <div className="last-updated">
+    <p className="date">Last Updated: {lastUpdated.toLocaleDateString('en-US', { timeZone: userTimezone })}</p>
+    <p className="clock">{lastUpdated.toLocaleTimeString('en-US', { timeZone: userTimezone })}</p>
+  </div>
+
+  {/* Live prices section */}
+  <div className="live-prices">
+    <div className="prices gold">
+      <div className="price gold-price">
+        <p>Gold 1g 916: {livePrices.gold}</p>
       </div>
-
-      <div className="history-prices">
-        <h2>History Prices</h2>
-        
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-          <DatePicker
-            multiple
-            value={selectedDates}
-            onChange={(dates) => {
-                const formattedDates = dates.map((date) => {
-                return `${date.year}-${(date.month.number).toString().padStart(2, '0')}-${date.day.toString().padStart(2, '0')}`;
-                });
-                setSelectedDates(formattedDates);
-            }}
-            format="YYYY-MM-DD"
-            className="purple"
-            placeholder="Select dates"
-            />
-            <button onClick={handleSubmit} style={{ marginLeft: '10px' }}>Submit</button>
-          </div>
-          <button onClick={handleRefresh} style={{ marginRight: '10px' }}>Refresh</button>
-        </div>
-
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            {historyPrices.length > 0 ? (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Gold Price (g)</th>
-                    <th>Gold Price (oz)</th>
-                    <th>After Import Duty</th>
-                    <th>Consumer Price (GST)</th>
-                    <th>Gold 916 (GST)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {historyPrices.map((price) => (
-                    <tr key={price._id}>
-                      <td>{price.Date.split('T')[0]}</td>
-                      <td>{price.GoldPrice_Gm || 'N/A'}</td>
-                      <td>{price.GoldPrice_Oz || 'N/A'}</td>
-                      <td>{price.AfterImportDuty}</td>
-                      <td>{price.ConsumerPrice_gst}</td>
-                      <td>{price.Gold916_gst || 'N/A'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p>No historical prices available.</p>
-            )}
-          </>
-       
-        )}
+      <div className="price gold-price">
+        <p>Gold 10g 999: {livePrices.gold}</p>
       </div>
     </div>
+    <div className="prices silver">
+      <div className="price silver-price">
+        <p>Silver 1kg 999: {livePrices.silver}</p>
+      </div>
+      <div className="price silver-price">
+        <p>Silver 1g 925: {livePrices.silver}</p>
+      </div>
+    </div>
+  </div>
+
+  {/* City time section */}
+  <div className="city-time-container">
+    <div className="city-time">
+      <img src={usa} alt="NYC Flag" />
+      <p>{getCityTime(-4)}</p>
+    </div>
+    <div className="city-time">
+      <img src={uk} alt="London Flag" />
+      <p>{getCityTime(0)}</p>
+    </div>
+    <div className="city-time">
+      <img src={uae} alt="Dubai Flag" />
+      <p>{getCityTime(4)}</p>
+    </div>
+  </div>
+
+  {/* History prices section */}
+  <div className="history-prices">
+    <h2>History Prices</h2>
+    <div className="filters">
+  <div className="left-section">
+    <DatePicker
+      multiple
+      value={selectedDates}
+      onChange={(dates) => {
+        const formattedDates = dates.map((date) => {
+          return `${date.year}-${(date.month.number).toString().padStart(2, '0')}-${date.day.toString().padStart(2, '0')}`;
+        });
+        setSelectedDates(formattedDates);
+      }}
+      format="YYYY-MM-DD"
+      className="gold-border maroon"
+      placeholder="Select dates"
+    />
+    <button className="submit" onClick={handleSubmit}>
+      Submit <i className="fas fa-arrow-right"></i> {/* Icon for submit */}
+    </button>
+  </div>
+  <button className="refresh" onClick={handleRefresh}>Refresh</button>
+</div>
+
+
+    {loading ? (
+      <p>Loading...</p>
+    ) : (
+      <>
+        {historyPrices.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Gold Price (g)</th>
+                <th>Gold Price (oz)</th>
+                <th>After Import Duty</th>
+                <th>Consumer Price (GST)</th>
+                <th>Gold 916 (GST)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {historyPrices.map((price) => (
+                <tr key={price._id}>
+                  <td>{price.Date.split('T')[0]}</td>
+                  <td>{price.GoldPrice_Gm || 'N/A'}</td>
+                  <td>{price.GoldPrice_Oz || 'N/A'}</td>
+                  <td>{price.AfterImportDuty}</td>
+                  <td>{price.ConsumerPrice_gst}</td>
+                  <td>{price.Gold916_gst || 'N/A'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No historical prices available.</p>
+        )}
+      </>
+    )}
+  </div>
+</div>
+
   );
 };
 

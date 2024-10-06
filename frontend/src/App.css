@@ -1,40 +1,54 @@
-/* src/App.css */
+/* Merged and Refined Gold Price Website CSS */
+
 @import url('./assets/fonts/fonts.css');
 
-@media (max-width: 768px) {  /* Adjust the breakpoint as needed */
-  table {
-    overflow-x: auto; /* Enable horizontal scrolling */
-    display: block;  /* This might be needed for some browsers */
-  }
+:root {
+  --primary-color: #4a0121;
+  --secondary-color: #6a0230;
+  --text-color: #ffffff;
+  --accent-color: #ffd700;
+  --background-color: #2c0113;
 }
 
-@media (max-width: 768px) {
-  th:nth-child(3), td:nth-child(3) { display: none; } /* Hide the 3rd column */ 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* Now you can use the font-family in your styles */
 body {
   font-family: 'Mokoto', sans-serif;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden; /* Prevent scrollbar on body */
 }
 
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+}
+
+/* Navigation styles */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #4a0121;
-  padding: 1rem;
+  background-color: var(--primary-color);
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  height: 60px; /* Adjust the height of the navbar */
-  padding: 0 20px;
-  box-shadow: 0px 4px 2px -2px gray;
-}
-
-.home{
-  background-color: #4a0121;
+  height: 60px;
+  box-shadow: 0px 4px 2px -2px #d39d5e;
 }
 
 .logo {
@@ -46,20 +60,27 @@ body {
 .logo-link {
   display: flex;
   align-items: center;
-  text-decoration: none; /* Remove underline */
+  text-decoration: none;
 }
 
-.logo img {
-  width: 40px;
-  height: 40px;
+.logo-image {
+  width: 300px;
+  height: 60px;
   margin-right: 10px;
+  display: flex;
+}
+
+.bislogo-image {
+  display: flex;
+  width: 50px;
+  height: 35px;
 }
 
 .logo-text {
   font-family: 'Mokoto', sans-serif;
   color: #d39d5e;
-  font-size: 24px; /* Adjust font size */
-  margin: 0; /* Remove margin from h1 */
+  font-size: 24px;
+  margin: 0;
 }
 
 .nav-links {
@@ -72,10 +93,6 @@ body {
   color: white;
 }
 
-.nav-links li a:hover {
-  color: #d39d5e; /* Optional: change color on hover */
-}
-
 .nav-links li {
   margin-right: 20px;
 }
@@ -83,24 +100,56 @@ body {
 .nav-links a {
   color: #d39d5e;
   text-decoration: none;
-  color: inherit;
-}
-
-.nav-links li a{
   font-size: 15px;
 }
 
+.nav-links li a:hover {
+  color: var(--accent-color);
+}
+
+/* Hamburger menu styles */
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-icon-line {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 4px;
+  transition: 0.4s;
+}
+
+.menu-icon-line.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-icon-line.open:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-icon-line.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Footer styles */
 .footer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #4a0121;
+  justify-content: space-between;
+  background-color: var(--primary-color);
   padding: 1rem;
   height: 40px;
   text-align: center;
   color: #d39d5e;
-  
+  align-items: center;
+  z-index: 1000;
+  height: 60px;
+  box-shadow: 0px -4px 2px -2px #d39d5e;
 }
 
 .social-links {
@@ -124,49 +173,357 @@ body {
   font-size: 24px;
 }
 
-/* In App.css or any global CSS */
 .App {
   text-align: center;
   padding-top: 60px;
+  height: calc(100vh - 40px); /* Subtract navbar and footer height */
+  overflow-y: auto; /* Add vertical scrollbar */
 }
 
 .MainContent {
-  margin-top: 60px; /* Adjust this based on your navbar height */
-  padding: 20px;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: 60px;
 }
 
-
-/* App.css */
-
+/* Price card styles */
 .price-card {
   padding: 20px;
-  background-color: #f8f8f8;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0 auto 20px;
+  border: 1px solid #d39d5e;
 }
 
-price-card table {
-  width: 100%;
-  box-sizing: border-box;
-}
 
 .live-prices, .history-prices {
   margin-bottom: 20px;
 }
 
+.last-updated {
+  text-align: right;
+  font-size: 0.9rem;
+  color: #cccccc;
+  margin-bottom: 10px;
+}
+
+.live-prices {
+  background-color: var(--primary-color);
+  border-radius: 15px;
+  padding: 20px;
+  position: relative;
+  color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  overflow: hidden;
+}
+
+.time-date {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #d39d5e;
+  margin-bottom: 10px;
+}
+
+.time-date .date, 
+.time-date .clock {
+  margin-left: 10px;
+}
+
+.clock {
+  color: whitesmoke;
+  font-weight: bold;
+}
+
+.date {
+  color: whitesmoke;
+}
+
+.prices {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.gold-price {
+  color: #d39d5e;
+  border: 2px solid gold;
+  background-color: rgba(255, 215, 0, 0.1);
+}
+
+.silver-price {
+  color: silver;
+  border: 2px solid silver;
+  background-color: rgba(192, 192, 192, 0.1);
+}
+
+/* City time styles */
+.city-time-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.city-time {
+  text-align: center;
+  color: whitesmoke;
+  font-size: x-small;
+}
+
+.city-time img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+}
+
+/* History prices styles */
+.history-prices {
+  margin-top: 30px;
+}
+
+.history-prices h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: var(--accent-color);
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.gold-border {
+  border: 2px solid gold;  /* Adds a gold border to the date picker */
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.submit {
+  background-color: #4a0121; /* Your preferred maroon color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.submit i {
+  margin-left: 5px; /* Space between button text and icon */
+}
+
+.submit:hover {
+  background-color: #721538;
+}
+
+.refresh {
+  background-color: #4a0121;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;  /* Push refresh to the right */
+}
+
+.refresh:hover {
+  background-color: #721538;
+}
+
+.maroon {
+  color: #d39d5e;
+}
+
+
+.date-picker {
+  flex-grow: 1;
+}
+
+.maroon {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: auto;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px;
   text-align: left;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+  position: sticky;
+  top: 0;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    width: 200px;
+    text-align: right;
+    padding: 10px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .menu-icon {
+    display: flex;
+  }
+
+  .nav-links li {
+    padding: 10px 0;
+  }
+
+  .nav-links a {
+    font-size: 16px;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .refresh {
+    align-self: flex-end;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  th:nth-child(3), td:nth-child(3) { 
+    display: none; 
+  }
+
+  .prices {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 768px) {
+  .prices {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .price {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .live-prices {
+    padding: 30px;
+  }
+
+  .time-date .date,
+  .time-date .clock {
+    font-size: 18px;
+  }
+
+  .price {
+    font-size: 22px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.price-card, .history-prices {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.App::-webkit-scrollbar {
+  width: 10px;
+}
+
+.App::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+.App::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 5px;
+}
+
+.App::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
+/* For Firefox */
+.App {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary-color) var(--background-color);
+}
+
+/* Remove global scrollbar styles */
+::-webkit-scrollbar,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+  width: auto;
+  background: initial;
 }
