@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/image_igi.png'; // replace with your logo image
-import bislogo from '../assets/bislogo.png';
-
+import logo from '../assets/img/image_igi.png'; 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -32,6 +30,9 @@ const Navbar = () => {
         </li>
         <li>
           <Link to="/aboutus" onClick={toggleMenu}>About Us &nbsp;</Link>
+        </li>
+        <li>
+          <Link to="/help" onClick={toggleMenu}>Help &nbsp;</Link>
         </li>
       </ul>
     </nav>

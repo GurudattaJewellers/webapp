@@ -1,0 +1,232 @@
+.jewelry-help-center {
+    font-family: 'Playfair Display', serif;
+    background-color: #f5f5f5;
+    color: #333;
+    min-height: 100vh;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header_help {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    font-size: 28px;
+    color: #4a0121;
+  }
+  
+  .home-button {
+    background: none;
+    border: none;
+    color: #4a0121;
+    cursor: pointer;
+  }
+  
+  .home-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .section-button, .topic-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #4a0121;
+    padding: 20px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: left;
+  }
+  
+  .section-button:hover, .topic-card:hover {
+    background-color: #4a0121;
+    color: #fff;
+  }
+  
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .topic-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: #4a0121;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 24px;
+    color: #4a0121;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    align-items: start;
+  }
+
+  .help{
+    color: #4a0121;
+  }
+  
+  .topic-image {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .topic-image {
+      max-width: 90%;
+    }
+  }
+
+  .topic-list {
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+  
+  .topic-list li {
+    margin-bottom: 10px;
+  }
+  
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 20px;
+  }
+  
+  .topic-table {
+    width: 100%;
+    min-width: 1000px; /* Changed from 500px to ensure full width on mobile */
+    border-collapse: collapse;
+    font-size: 14px;
+    table-layout: fixed; /* Added to help with column widths */
+  }
+  
+  .topic-table th,
+  .topic-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    word-wrap: break-word; /* Added to prevent text overflow */
+    max-width: fit-content;
+  }
+  
+  .topic-table th {
+    background-color: #4a0121;
+    color: #fff;
+    max-width: fit-content;
+    text-align: center;
+  }
+  
+  .topic-table td {
+    color: whitesmoke;
+    max-width: fit-content;
+    text-align: center;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .topic-table {
+      font-size: 12px;
+    }
+  
+    .topic-table th,
+    .topic-table td {
+      padding: 6px;
+    }
+    
+    /* Added styles to make table scrollable horizontally on mobile */
+    .table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .topic-table {
+      width: 100%;
+      min-width: 300px; /* Ensures minimum width for scrolling */
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .topic-table {
+      font-size: 6px;
+    }
+  
+    .topic-table th,
+    .topic-table td {
+      padding: 4px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .home-content, .topic-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .section-button, .topic-card {
+      font-size: 16px;
+      padding: 15px;
+    }
+  
+    h1 {
+      font-size: 24px;
+    }
+  
+    h2 {
+      font-size: 20px;
+    }
+  }
+
+  .topic-content {
+    text-align: left;
+  }
+  
+  .topic-content h2,
+  .topic-content h3 {
+    text-align: center;
+  }
+  
+  .topic-body {
+    text-align: left;
+  }
+  
+  .topic-body p,
+  .topic-body ul,
+  .topic-body ol {
+    text-align: left;
+  }
+  
+  .faq-item h4 {
+    text-align: left;
+  }
+
+  h4 {
+    text-align: left;
+  }
+
