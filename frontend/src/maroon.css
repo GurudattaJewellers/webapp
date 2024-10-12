@@ -1,0 +1,81 @@
+:root {
+    --rmdp-primary-maroon: #4a0121; /* Main maroon color */
+    --rmdp-secondary-maroon: #6a2d45; /* Softer maroon */
+    --rmdp-shadow-maroon: #6a2d45; /* Shadow effect */
+    --rmdp-today-maroon: #ff6347; /* Highlight today (tomato red) */
+    --rmdp-hover-maroon: #802040; /* Hover effect */
+    --rmdp-deselect-maroon: #38011a; /* Deselect button color */
+  }
+  
+  .maroon .rmdp-wrapper {
+    border: 1px solid var(--rmdp-secondary-maroon);
+    box-shadow: 0 0 5px var(--rmdp-secondary-maroon);
+  }
+  
+  .maroon .rmdp-panel-body li {
+    background-color: var(--rmdp-primary-maroon);
+    box-shadow: 0 0 2px var(--rmdp-secondary-maroon);
+  }
+  
+  .maroon .rmdp-week-day {
+    color: var(--rmdp-primary-maroon);
+  }
+  
+  .maroon .rmdp-day.rmdp-deactive {
+    color: var(--rmdp-secondary-maroon);
+  }
+  
+  .maroon .rmdp-range {
+    background-color: var(--rmdp-primary-maroon);
+    box-shadow: 0 0 3px var(--rmdp-shadow-maroon);
+  }
+  
+  .maroon .rmdp-arrow {
+    border: solid var(--rmdp-primary-maroon);
+    border-width: 0 2px 2px 0;
+  }
+  
+  .maroon .rmdp-arrow-container:hover {
+    background-color: var(--rmdp-primary-maroon);
+    box-shadow: 0 0 3px var(--rmdp-secondary-maroon);
+  }
+  
+  .maroon .rmdp-panel-body::-webkit-scrollbar-thumb {
+    background: var(--rmdp-primary-maroon);
+  }
+  
+  .maroon .rmdp-day.rmdp-today span {
+    background-color: var(--rmdp-today-maroon);
+  }
+  
+  .maroon .rmdp-rtl .rmdp-panel {
+    border-left: unset;
+    border-right: 1px solid var(--rmdp-secondary-maroon);
+  }
+  
+  .maroon .rmdp-day.rmdp-selected span:not(.highlight) {
+    background-color: var(--rmdp-primary-maroon);
+    box-shadow: 0 0 3px var(--rmdp-shadow-maroon);
+  }
+  
+  .maroon .rmdp-day:not(.rmdp-day-hidden) span:hover {
+    background-color: var(--rmdp-hover-maroon) !important;
+  }
+  
+  .maroon .b-deselect {
+    color: var(--rmdp-deselect-maroon);
+    background-color: white;
+  }
+  
+  .maroon .rmdp-action-button {
+    color: var(--rmdp-primary-maroon);
+  }
+  
+  .maroon .rmdp-button:not(.rmdp-action-button) {
+    background-color: var(--rmdp-primary-maroon);
+  }
+  
+  .maroon .rmdp-button:not(.rmdp-action-button):hover {
+    background-color: var(--rmdp-deselect-maroon);
+  }
+  

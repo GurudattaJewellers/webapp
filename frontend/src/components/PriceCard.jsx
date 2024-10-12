@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-multi-date-picker';
-import 'react-multi-date-picker/styles/colors/maroon.css';
+import '../maroon.css';
 import usa from '../assets/img/usa.svg';
 import uk from '../assets/img/uk.svg';
 import uae from '../assets/img/uae.svg';
