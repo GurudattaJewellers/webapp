@@ -116,32 +116,32 @@ app.get('/silver', async (req, res) => {
         console.error('Error fetching data from the website:', error);
         throw error; // Re-throw to be caught in the outer catch block
       });
-
+  
       const $ = cheerio.load(response.data);
       let goldRate, silverRate, goldPrice, silverPrice, dateTime, silver_pure, gold_pure, gold_usa, silver_usa, rate;
-
-      const response2 = await axios.get('http://www.kjpl.in/index.php/C_booking/get_commodity_data');
-
-      // Extract the data from the response
-      const commodityDetails = response2.data.commoditydetails;
-
-      if (commodityDetails && Array.isArray(commodityDetails) && commodityDetails.length >= 7) {
-        // Extract sell_rate from 6th index (index 5)
-        const sellRate6thIndex = parseFloat(commodityDetails[6].sell_rate);
-        
-        // Extract sell_rate from 1st index (index 0)
-        const sellRate1stIndex = parseFloat(commodityDetails[1].sell_rate);
-
-        // Calculate adjusted rates
-        silver_pure = parseFloat((sellRate6thIndex * 1.01) / 1000).toFixed(2); // Add 1% and divide by 1000
-        gold_pure = parseFloat((sellRate1stIndex * 1.001) / 10 ).toFixed(2); // Add 0.1%
-
-        // console.log('Adjusted Rate (6th Index):', silver_pure);
-        // console.log('Adjusted Rate (1st Index):', gold_pure);
-
-        // You can now use adjustedRate6thIndex and adjustedRate1stIndex as needed
-      } else {
-        console.error('Commodity details array is not in the expected format or length');
+  
+      try {
+        const response2 = await axios.get('http://www.kjpl.in/index.php/C_booking/get_commodity_data');
+  
+        // Extract the data from the response
+        const commodityDetails = response2.data.commoditydetails;
+  
+        if (commodityDetails && Array.isArray(commodityDetails) && commodityDetails.length >= 7) {
+          // Extract sell_rate from 6th index (index 5)
+          const sellRate6thIndex = parseFloat(commodityDetails[6].sell_rate);
+          
+          // Extract sell_rate from 1st index (index 0)
+          const sellRate1stIndex = parseFloat(commodityDetails[1].sell_rate);
+  
+          // Calculate adjusted rates
+          silver_pure = parseFloat((sellRate6thIndex * 1.01) / 1000).toFixed(2); // Add 1% and divide by 1000
+          gold_pure = parseFloat((sellRate1stIndex * 1.001) / 10).toFixed(2); // Add 0.1%
+        } else {
+          console.error('Commodity details array is not in the expected format or length');
+        }
+      } catch (error) {
+        console.error('Error fetching commodity data:', error.message);
+        return res.status(500).json({ error: 'Failed to fetch commodity data' });
       }
   
       // Extract gold and silver rates
@@ -170,15 +170,15 @@ app.get('/silver', async (req, res) => {
       } else {
         console.error('Table "MJDTA RATE (With GST)" not found');
       }
-
+  
       // Primary API (Free Currency API)
       const PRIMARY_API_URL = 'https://api.freecurrencyapi.com/v1/latest';
       const PRIMARY_API_KEY = 'fca_live_BCxjNm6l18TDWCF2K4jwOGXm9YVCk1k07ThajxcM';
-
+  
       // Backup API (Currency Freaks)
       const BACKUP_API_URL = 'https://api.currencyfreaks.com/latest';
       const BACKUP_API_KEY = '4419bb9ef12142cfb97e67e755cab4be';
-
+  
       try {
         // Try the primary API first
         const primaryResponse = await axios.get(PRIMARY_API_URL, {
@@ -190,13 +190,12 @@ app.get('/silver', async (req, res) => {
         });
         
         rate = primaryResponse.data.data.INR;
-        gold_usa = '$'+ parseFloat(((gold_pure) * 0.92 * 31.1034768)/rate).toFixed(2)
-        silver_usa = '$'+ parseFloat(((silver_pure) * 0.92 * 31.1034768)/rate).toFixed(2)
-        //console.log(rate);
-    
+        gold_usa = '$' + parseFloat(((gold_pure) * 0.92 * 31.1034768) / rate).toFixed(2);
+        silver_usa = '$' + parseFloat(((silver_pure) * 0.92 * 31.1034768) / rate).toFixed(2);
+      
       } catch (primaryError) {
         console.error('Error fetching from primary API:', primaryError.message);
-    
+      
         try {
           // If primary API fails, try the backup API
           const backupResponse = await axios.get(BACKUP_API_URL, {
@@ -205,42 +204,43 @@ app.get('/silver', async (req, res) => {
               symbols: 'INR'
             }
           });
-    
+      
           const backupRate = backupResponse.data.rates.INR;
           res.json({ rate: backupRate, source: 'Currency Freaks API' });
-    
+      
         } catch (backupError) {
           console.error('Error fetching from backup API:', backupError.message);
-          res.status(500).json({ error: 'Failed to fetch exchange rate from both APIs' });
+          return res.status(500).json({ error: 'Failed to fetch exchange rate from both APIs' });
         }
       }
-      rate = parseFloat(rate).toFixed(2);
-    const updateResult = await pushDatatoDB(gold_usa, silver_usa, goldRate, silverRate, dateTime, rate);
-    //console.log('Database update result:', updateResult);
-
-    // Prepare the data object
-    const data = {
-      rate,
-      gold_usa,
-      silver_usa,
-      gold_pure,
-      silver_pure,
-      goldRate,
-      silverRate,
-      goldPrice,
-      silverPrice,
-      dateTime,
-      updateResult // Include the update result in the response
-    };
-
-    // Send the response in JSON format
-    res.json(data);
   
+      rate = parseFloat(rate).toFixed(2);
+      const updateResult = await pushDatatoDB(gold_usa, silver_usa, goldRate, silverRate, dateTime, rate);
+  
+      // Prepare the data object
+      const data = {
+        rate,
+        gold_usa,
+        silver_usa,
+        gold_pure,
+        silver_pure,
+        goldRate,
+        silverRate,
+        goldPrice,
+        silverPrice,
+        dateTime,
+        updateResult // Include the update result in the response
+      };
+  
+      // Send the response in JSON format
+      res.json(data);
+    
     } catch (error) {
       console.error('Error processing request:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+  
   
   // Define another route for a different endpoint
   app.get('/gold', async (req, res) => {
@@ -286,7 +286,7 @@ app.get('/api/gold-prices', async (req, res) => {
   // Existing code...
 
   // Route to get default one-week gold prices
-app.get('/api/gold-prices/default', async (req, res) => {
+  app.get('/api/gold-prices/default', async (req, res) => {
     try {
       const { start, end } = getLastWeekDates();
       const goldPricesData = await GoldPrices.find({
@@ -295,6 +295,28 @@ app.get('/api/gold-prices/default', async (req, res) => {
       res.json(goldPricesData); // Send one-week history as JSON
     } catch (error) {
       console.error('Error fetching default gold prices:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  app.get('/api/gold-prices/all', async (req, res) => {
+    try {
+      // Your existing code to fetch and return data
+      const goldPricesData = await GoldPrices.find({}).sort({ Date: -1 });
+      res.json(goldPricesData);
+    } catch (error) {
+      console.error('Error fetching gold prices:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  app.get('/api/silver-prices/all', async (req, res) => {
+    try {
+      // Your existing code to fetch and return data
+      const silverPricesData = await SilverPrices.find({}).sort({ Date: -1 });
+      res.json(silverPricesData);
+    } catch (error) {
+      console.error('Error fetching gold prices:', error);
       res.status(500).send('Internal Server Error');
     }
   });

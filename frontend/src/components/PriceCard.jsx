@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment-timezone';
 import { Subscript } from 'lucide-react';
+import GoldPriceChart from './GoldPriceChart';
+import SilverPriceChart from './SilverPriceChart';
 
 const PriceCard = () => {
   const [livePrices, setLivePrices] = useState({ gold: 0, silver: 0, gold_999: 0, silver_999: 0, updated: '',silver_usa:0, gold_usa:0 });
@@ -244,7 +246,7 @@ const PriceCard = () => {
     <div className="price-card">
   {/* Last updated section outside the live-prices card */}
   <div className="last-updated">
-    <TimeDisplay updatedTimeString={livePrices.updated} />
+    <TimeDisplay  updatedTimeString={livePrices.updated} />
   </div>
 
   {/* Live prices section */}
@@ -271,8 +273,9 @@ const PriceCard = () => {
         <p><span className="left-part">SILVER 1oz 999</span>  |  <span className="right-part"> {livePrices.silver_usa}</span></p> 
       </div>
     </div>
-    <p style={{ fontSize: '0.6rem', color: 'whitesmoke' }}>* CGST 1.5% and SGST 1.5% Applicable after live rates </p>
-    <p style={{ fontSize: '0.4rem', color: '#666' }} >Disclaimer : liverates provided above are from sources we believe are reliable, but we cannot guarantee their accuracy. The prices are shared without any warranties. By using this site, you agree that any errors or missing information cannot be the basis for claims or legal action.</p>
+    <p style={{ fontSize: '0.6rem', color: 'whitesmoke', margin: '0', padding: '0'  }}>* CGST 1.5% and SGST 1.5% Applicable after live rates </p>
+    <p style={{ fontSize: '0.4rem', color: 'whitesmoke', margin: '0', padding: '0' }}><TimeDisplay updatedTimeString={livePrices.updated} /></p>
+    <p style={{ fontSize: '0.4rem', color: '#666',margin: '0', padding: '0' }} >Disclaimer : liverates provided above are from sources we believe are reliable, but we cannot guarantee their accuracy. The prices are shared without any warranties. By using this site, you agree that any errors or missing information cannot be the basis for claims or legal action.</p>
   </div>
   
 
@@ -355,11 +358,15 @@ const PriceCard = () => {
                     </table>
                   </div>
                   {renderGoldPagination(currentGoldPage, setCurrentGoldPage, historyGoldPrices.length)}
+                  <div>
+                  <GoldPriceChart></GoldPriceChart>
+                  </div>
                 </>
               ) : (
                 <p>No Gold historical prices available for the selected dates.</p>
               )}
             </div>
+            
 
             <div className="table-container silver-table">
               <h3 style={{color:"silver"}}>Silver Prices</h3>
@@ -382,7 +389,7 @@ const PriceCard = () => {
                           <tr key={price._id}>
                             <td>{price.Date.split('T')[0]}</td>
                             <td>₹ {((price.SilverPrice_Oz * livePrices.rate) / 31.1035).toFixed(2) || 'N/A'}</td>
-                            <td>₹ {price.SilverPrice_Oz * livePrices.rate || 'N/A'}</td>
+                            <td>₹ {(price.SilverPrice_Oz * livePrices.rate).toFixed(2) || 'N/A'}</td>
                             <td>₹ {price.AfterImportDuty}</td>
                             <td>₹ {price.ConsumerPrice_gst}</td>
                             <td>₹ {price.SilverPrice_Gm || 'N/A'}</td>
@@ -392,6 +399,9 @@ const PriceCard = () => {
                     </table>
                   </div>
                   {renderSilverPagination(currentSilverPage, setCurrentSilverPage, historySilverPrices.length)}
+                  <div>
+                  <SilverPriceChart></SilverPriceChart>
+                  </div>
                 </>
               ) : (
                 <p>No Silver historical prices available for the selected dates.</p>
