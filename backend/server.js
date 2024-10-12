@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const cron = require('node-cron');
+const path = require('path'); // Import path
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -26,6 +27,9 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB Atlas');
 });
+
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Helper function to get date range
 const getLastWeekDates = () => {
@@ -374,6 +378,10 @@ app.get('/api/gold-prices', async (req, res) => {
   });
   // ...
   
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
